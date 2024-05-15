@@ -1,19 +1,19 @@
 import React from 'react';
+import BrushOptions from './BrushOptions';
+import BrushSelect from './BrushSelect';
+import { Button } from '@mui/material';
 
-const ToolBar = ({ setBrushType, setIsDrawingMode }) => {
+const Toolbar = ({ clearCanvas }) => {
     return (
-        <div>
-            <label>Brush Type: </label>
-            <select onChange={(e) => setBrushType(e.target.value)}>
-                <option value="PencilBrush">Pencil</option>
-                <option value="CircleBrush">Circle</option>
-                <option value="SprayBrush">Spray</option>
-
-            </select>
-            <button onClick={() => setIsDrawingMode(true)}>Draw</button>
-            <button onClick={() => setIsDrawingMode(false)}>Select</button>
+        <div className=" flex flex-col justify-between h-screen bg-gray-800 p-4">
+            <div>
+                <BrushOptions/>
+                <BrushSelect/>
+                <Button variant="contained" onClick={clearCanvas} sx={{ mt: 2 }}>Clear</Button>
+            </div>
+            <div className="flex-grow" />
         </div>
     );
 };
 
-export default ToolBar;
+export default Toolbar;

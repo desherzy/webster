@@ -2,20 +2,18 @@ import { create } from 'zustand';
 
 const useCanvasStore = create((set) => ({
     canvas: null,
-    tool: "",
+    isDrawingMode: true,
     color: '#130c0c',
+    brushType: 'PencilBrush',
+    brushSize: 5,
+
+
     setColor: (newColor) => set({ color: newColor }),
-    lineThickness: 1,
-    setLineThickness: (newThickness) => set({ lineThickness: newThickness }),
+    setIsDrawingMode: (newIsDrawingMode) => set( {isDrawingMode: newIsDrawingMode }),
+    setBrushSize: (newThickness) => set({ brushSize: newThickness }),
+    setBrushType: (newType) => set({ brushType: newType }),
     setCanvas: (canvas) => set({ canvas }),
 
-    updateBrushSettings: (color, thickness) => {
-        const canvas = useCanvasStore.getState().canvas;
-        if (canvas) {
-            canvas.freeDrawingBrush.color = color;
-            canvas.freeDrawingBrush.width = thickness;
-        }
-    },
 
 }));
 

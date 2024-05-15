@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
-import ToolBar from "./Toolbar.jsx";
-import BrushOptions from "./BrushOptions.jsx";
+import Toolbar from "./Toolbar.jsx";
+import {useCanvasStore} from "../store/index.js";
 
 const CanvasWrapper = () => {
     const canvasRef = useRef(null);
-    const [canvas, setCanvas] = useState(null);
-    const [color, setColor] = useState('#000000');
-    const [brushSize, setBrushSize] = useState(5);
-    const [brushType, setBrushType] = useState('PencilBrush');
-    const [isDrawingMode, setIsDrawingMode] = useState(true);
+    const { canvas, setCanvas, color, setColor, isDrawingMode,
+        setIsDrawingMode, brushSize, setBrushSize, brushType, setBrushType } = useCanvasStore();
 
     useEffect(() => {
         const initCanvas = new fabric.Canvas(canvasRef.current, {
@@ -57,11 +54,11 @@ const CanvasWrapper = () => {
     }, [isDrawingMode, canvas]);
 
     return (
-        <div>
-            <BrushOptions color={color} setColor={setColor} brushSize={brushSize} setBrushSize={setBrushSize} />
-            <ToolBar setBrushType={setBrushType} setIsDrawingMode={setIsDrawingMode} />
-            <button onClick={clearCanvas}>Clear</button>
-            <canvas ref={canvasRef} width={800} height={600} style={{ border: '1px solid #000' }} />
+        <div className="flex">
+            <Toolbar clearCanvas={clearCanvas}/>
+            <div className="flex-grow flex justify-center items-center">
+                <canvas ref={canvasRef} width={800} height={600} style={{border: '1px solid #000'}}/>
+            </div>
         </div>
     );
 };
