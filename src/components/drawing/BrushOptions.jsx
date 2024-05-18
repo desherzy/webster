@@ -1,5 +1,5 @@
 import React from 'react';
-import {useCanvasStore} from "../store/index.js";
+import {useCanvasStore} from "../../store/index.js";
 
 const BrushOptions = () => {
     const { color, setColor, brushSize, setBrushSize } = useCanvasStore();

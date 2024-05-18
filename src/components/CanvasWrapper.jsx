@@ -1,19 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
-import Toolbar from "./Toolbar.jsx";
+import LeftToolbar from "./LeftToolbar.jsx";
 import {useCanvasStore} from "../store/index.js";
+import RightToolbar from "./RightToolbar.jsx";
 
 const CanvasWrapper = () => {
     const canvasRef = useRef(null);
-    const { canvas, setCanvas, color, setColor, isDrawingMode,
-        setIsDrawingMode, brushSize, setBrushSize, brushType, setBrushType } = useCanvasStore();
+    const { canvas, setCanvas, color, brushSize, brushType,
+        isDrawingMode, selectedLayerId, layers, addObjectToLayer } = useCanvasStore();
 
     useEffect(() => {
         const initCanvas = new fabric.Canvas(canvasRef.current, {
-            isDrawingMode: true,
+            isDrawingMode: false,
         });
         initCanvas.setBackgroundColor('white', initCanvas.renderAll.bind(initCanvas));
         setCanvas(initCanvas);
+
         return () => {
             initCanvas.dispose();
         };
@@ -53,12 +55,56 @@ const CanvasWrapper = () => {
         }
     }, [isDrawingMode, canvas]);
 
+
+    useEffect(() => {
+        if (canvas && selectedLayerId) {
+            const selectedLayer = layers.find(layer => layer.id === selectedLayerId);
+            if (selectedLayer) {
+                canvas.setActiveObject(selectedLayer.group);
+            }
+        } else if (canvas) {
+            canvas.discardActiveObject();
+        }
+    }, [canvas, selectedLayerId, layers]);
+
+
+    const handleImageUpload = (data) => {
+        if (canvas) {
+            fabric.Image.fromURL(data, function (img) {
+                img.set({
+                    left: 50,
+                    top: 50,
+                    selectable: true,
+                });
+                canvas.add(img);
+                canvas.renderAll();
+            });
+        }
+    };
+
+    const handleObjectAdded = (e) => {
+        const { target } = e;
+        if (selectedLayerId) {
+            addObjectToLayer(target);
+        }
+    };
+
+    useEffect(() => {
+        if (canvas) {
+            canvas.on('object:added', handleObjectAdded);
+            return () => {
+                canvas.off('object:added', handleObjectAdded);
+            };
+        }
+    }, [canvas, selectedLayerId]);
+
     return (
         <div className="flex">
-            <Toolbar clearCanvas={clearCanvas}/>
+            <LeftToolbar clearCanvas={clearCanvas} onImageUpload={handleImageUpload} />
             <div className="flex-grow flex justify-center items-center">
-                <canvas ref={canvasRef} width={800} height={600} style={{border: '1px solid #000'}}/>
+                <canvas ref={canvasRef} width={800} height={600} style={{ border: '1px solid #000' }} />
             </div>
+            <RightToolbar/>
         </div>
     );
 };

@@ -1,14 +1,19 @@
 import React from 'react';
-import BrushOptions from './BrushOptions';
-import BrushSelect from './BrushSelect';
+import BrushOptions from './drawing/BrushOptions.jsx';
+import BrushSelect from './drawing/BrushSelect.jsx';
 import { Button } from '@mui/material';
+import ShapesSelect from "./drawing/ShapesSelect.jsx";
+import ImageUploader from "./ImageUploader.jsx";
 
-const Toolbar = ({ clearCanvas }) => {
+
+const LeftToolbar = ({ clearCanvas, onImageUpload }) => {
     return (
         <div className=" flex flex-col justify-between h-screen bg-gray-800 p-4">
             <div>
                 <BrushOptions/>
                 <BrushSelect/>
+                <ShapesSelect/>
+                <ImageUploader onImageUpload={onImageUpload} />
                 <Button variant="contained" onClick={clearCanvas} sx={{ mt: 2 }}>Clear</Button>
             </div>
             <div className="flex-grow" />
@@ -16,4 +21,4 @@ const Toolbar = ({ clearCanvas }) => {
     );
 };
 
-export default Toolbar;
+export default LeftToolbar;
