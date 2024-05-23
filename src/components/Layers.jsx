@@ -25,7 +25,7 @@ const Layers = () => {
     };
 
     return (
-        <div className="w-64 bg-gray-200 p-4 h-screen">
+        <div className=" bg-gray-800 p-1">
             <Button variant="contained" onClick={handleAddLayer} sx={{ mb: 2 }}>
                 Add Layer
             </Button>

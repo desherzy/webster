@@ -3,7 +3,7 @@ import BrushOptions from './drawing/BrushOptions.jsx';
 import BrushSelect from './drawing/BrushSelect.jsx';
 import { Button } from '@mui/material';
 import ShapesSelect from "./drawing/ShapesSelect.jsx";
-import ImageUploader from "./ImageUploader.jsx";
+import ImageUploader from "./image/ImageUploader.jsx";
 
 
 const LeftToolbar = ({ clearCanvas, onImageUpload }) => {
