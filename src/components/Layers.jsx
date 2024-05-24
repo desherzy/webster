@@ -25,30 +25,33 @@ const Layers = () => {
     };
 
     return (
-        <div className=" bg-gray-800 p-1">
-            <Button variant="contained" onClick={handleAddLayer} sx={{ mb: 2 }}>
+        <div className="mt-3 bg-gray-800 p-1">
+            <Button variant="contained" onClick={handleAddLayer} sx={{mb: 2}}>
                 Add Layer
             </Button>
-            <List>
-                {layers.map(layer => (
-                    <ListItem
-                        key={layer.id}
-                        selected={layer.id === selectedLayerId}
-                        button
-                        onClick={() => handleLayerSelect(layer.id)}
-                    >
-                        <Checkbox
-                            checked={layer.visible}
-                            onChange={() => handleVisibilityToggle(layer.id)}
-                        />
-                        <ListItemText primary={layer.id} />
-                        <Button variant="contained" color="secondary" onClick={() => handleRemoveLayer(layer.id)}>
-                            Remove
-                        </Button>
-                    </ListItem>
-                ))}
-            </List>
+            <div className="max-h-[30vh] overflow-y-auto">
+                <List>
+                    {layers.map(layer => (
+                        <ListItem
+                            key={layer.id}
+                            selected={layer.id === selectedLayerId}
+                            button
+                            onClick={() => handleLayerSelect(layer.id)}
+                        >
+                            <Checkbox
+                                checked={layer.visible}
+                                onChange={() => handleVisibilityToggle(layer.id)}
+                            />
+                            <ListItemText primary={layer.id}/>
+                            <Button variant="contained" color="secondary" onClick={() => handleRemoveLayer(layer.id)}>
+                                Remove
+                            </Button>
+                        </ListItem>
+                    ))}
+                </List>
+            </div>
         </div>
+
     );
 };
 export default Layers;

@@ -8,6 +8,8 @@ const useCanvasStore = create((set) => ({
     brushSize: 5,
     layers: [],
     selectedLayerId: null,
+    undoStack: [],
+    redoStack: [],
 
     setColor: (newColor) => set({ color: newColor }),
     setIsDrawingMode: (newIsDrawingMode) => set({ isDrawingMode: newIsDrawingMode }),
@@ -51,11 +53,34 @@ const useCanvasStore = create((set) => ({
         const layer = state.layers.find(layer => layer.id === state.selectedLayerId);
         if (layer) {
             layer.group.add(object);
-            layer.group.set('dirty', true); // Mark the group as dirty to re-render
+            layer.group.set('dirty', true);
             state.canvas.renderAll();
         }
         return { layers: state.layers };
     }),
+
+    addToUndoStack: (state) => set((state) => ({ undoStack: [...state.undoStack, state.canvas.toJSON()], redoStack: [] })),
+    undo: () => set((state) => {
+        if (state.undoStack.length > 0) {
+            const newRedoStack = [...state.redoStack, state.canvas.toJSON()];
+            const lastState = state.undoStack.pop();
+            state.canvas.loadFromJSON(lastState);
+            state.canvas.renderAll();
+            return { undoStack: state.undoStack, redoStack: newRedoStack };
+        }
+        return {};
+    }),
+    redo: () => set((state) => {
+        if (state.redoStack.length > 0) {
+            const newUndoStack = [...state.undoStack, state.canvas.toJSON()];
+            const nextState = state.redoStack.pop();
+            state.canvas.loadFromJSON(nextState);
+            state.canvas.renderAll();
+            return { undoStack: newUndoStack, redoStack: state.redoStack };
+        }
+        return {};
+    }),
+
 }));
 
 export default useCanvasStore;

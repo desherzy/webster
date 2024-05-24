@@ -7,7 +7,7 @@ import RightToolbar from "./RightToolbar.jsx";
 const CanvasWrapper = () => {
     const canvasRef = useRef(null);
     const { canvas, setCanvas, color, brushSize, brushType,
-        isDrawingMode, selectedLayerId, layers, addObjectToLayer } = useCanvasStore();
+        isDrawingMode, selectedLayerId, layers, addObjectToLayer, addToUndoStack, undo, redo } = useCanvasStore();
 
     useEffect(() => {
         const initCanvas = new fabric.Canvas(canvasRef.current, {
@@ -44,6 +44,7 @@ const CanvasWrapper = () => {
 
     const clearCanvas = () => {
         if (canvas) {
+            addToUndoStack(canvas.toJSON());
             canvas.clear();
             canvas.setBackgroundColor('white', canvas.renderAll.bind(canvas));
         }
@@ -70,12 +71,14 @@ const CanvasWrapper = () => {
 
     const handleImageUpload = (data) => {
         if (canvas) {
+            addToUndoStack(canvas.toJSON());
             fabric.Image.fromURL(data, function (img) {
                 img.set({
                     left: 50,
                     top: 50,
                     selectable: true,
                 });
+
                 canvas.add(img);
                 canvas.renderAll();
             });
@@ -87,6 +90,7 @@ const CanvasWrapper = () => {
         if (selectedLayerId) {
             addObjectToLayer(target);
         }
+        addToUndoStack(canvas.toJSON());
     };
 
     useEffect(() => {
@@ -98,9 +102,11 @@ const CanvasWrapper = () => {
         }
     }, [canvas, selectedLayerId]);
 
+
+
     return (
         <div className="flex">
-            <LeftToolbar clearCanvas={clearCanvas} onImageUpload={handleImageUpload} />
+            <LeftToolbar clearCanvas={clearCanvas} onImageUpload={handleImageUpload} undo={undo} redo={redo} />
             <div className="flex-grow flex justify-center items-center">
                 <canvas ref={canvasRef} width={800} height={600} style={{ border: '1px solid #000' }} />
             </div>
