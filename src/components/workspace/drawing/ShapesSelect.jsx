@@ -1,5 +1,5 @@
 import React from 'react';
-import {useCanvasStore} from "../../store/index.js";
+import {useCanvasStore} from "../../../store/index.js";
 import { Button, MenuItem, Select, TextField, InputLabel, FormControl } from '@mui/material';
 
 const ShapesSelect = () => {

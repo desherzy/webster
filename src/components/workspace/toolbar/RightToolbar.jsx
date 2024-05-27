@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, List, ListItem, ListItemText, Checkbox } from '@mui/material';
-import Layers from "./Layers.jsx";
-import ImageFilters from "./image/ImageFilters.jsx";
+import Layers from "../Layers.jsx";
+import ImageFilters from "../image/ImageFilters.jsx";
 
 const RightToolbar = () => {
 

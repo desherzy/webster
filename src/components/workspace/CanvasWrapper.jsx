@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
-import LeftToolbar from "./LeftToolbar.jsx";
-import {useCanvasStore} from "../store/index.js";
-import RightToolbar from "./RightToolbar.jsx";
+import LeftToolbar from "./toolbar/LeftToolbar.jsx";
+import {useCanvasStore} from "../../store/index.js";
+import RightToolbar from "./toolbar/RightToolbar.jsx";
 
 const CanvasWrapper = () => {
     const canvasRef = useRef(null);
@@ -102,11 +102,39 @@ const CanvasWrapper = () => {
         }
     }, [canvas, selectedLayerId]);
 
+    const handleExport = ({ fileName, format, quality }) => {
+        if (!canvas) return;
+
+        let dataURL;
+        if (format === 'json') {
+            const json = JSON.stringify(canvas.toJSON());
+            const blob = new Blob([json], { type: 'application/json' });
+            dataURL = URL.createObjectURL(blob);
+        } else if (format === 'svg') {
+            const svg = canvas.toSVG();
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            dataURL = URL.createObjectURL(blob);
+        } else {
+            dataURL = canvas.toDataURL({
+                format: format,
+                quality: format === 'jpeg' ? quality : 1.0,
+            });
+        }
+
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = `${fileName}.${format}`;
+        link.click();
+
+        if (format === 'json' || format === 'svg') {
+            URL.revokeObjectURL(dataURL);
+        }
+    };
 
 
     return (
         <div className="flex">
-            <LeftToolbar clearCanvas={clearCanvas} onImageUpload={handleImageUpload} undo={undo} redo={redo} />
+            <LeftToolbar clearCanvas={clearCanvas} onImageUpload={handleImageUpload} undo={undo} redo={redo} onExport={handleExport} />
             <div className="flex-grow flex justify-center items-center">
                 <canvas ref={canvasRef} width={800} height={600} style={{ border: '1px solid #000' }} />
             </div>

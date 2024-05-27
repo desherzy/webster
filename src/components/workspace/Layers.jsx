@@ -1,5 +1,5 @@
 import React from 'react';
-import {useCanvasStore} from "../store/index.js";
+import {useCanvasStore} from "../../store/index.js";
 import {Button, Checkbox, List, ListItem, ListItemText} from "@mui/material";
 
 const Layers = () => {

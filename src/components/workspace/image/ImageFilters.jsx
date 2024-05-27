@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useCanvasStore} from "../../store/index.js";
+import {useCanvasStore} from "../../../store/index.js";
 import {Slider, Typography, Button, FormControlLabel, Checkbox} from '@mui/material';
 import { fabric } from 'fabric';
 
