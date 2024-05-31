@@ -8,7 +8,7 @@ const sequelize = new Sequelize(
     host: `${process.env.DB_HOST}`,
     dialect: 'mysql',
     retry: {
-        match: [/Deadlock/i], // If we have deadlock, than retry with the backoff in ms
+        match: [/Deadlock/i],
         max: 3, 
         backoffBase: 1000,
         backoffExponent: 1.5,

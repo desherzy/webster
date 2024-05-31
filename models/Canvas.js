@@ -20,19 +20,20 @@ const Canvas = sequelize.define('Canvas', {
         type: DataTypes.TEXT,
         allowNull: false
     },
+    height: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    width: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     content: {
         type: DataTypes.JSON
-    },
-    created_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
-    },
-    updated_at: {
-        type: DataTypes.DATE
     }
 }, {
     tableName: 'canvas',
-    timestamps: false
+    timestamps: true
 });
 
 module.exports = Canvas;

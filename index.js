@@ -10,7 +10,8 @@ const cors = require('cors');
 const app = express();
 
 const authRouter = require('./routes/authRouter');
-const userRouter = require('./routes/userRoutes');
+const userRouter = require('./routes/userRouter');
+const projectRouter = require('./routes/projectRouter');
 
 initializeDatabase();
 
@@ -24,8 +25,9 @@ app.use(cookieParser());
 app.use(fileUpload());
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use('api/auth', authRouter);
-app.use('api/user', userRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
+app.use('/api/projects', projectRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server running at http://localhost:${process.env.PORT}/`);
