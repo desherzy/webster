@@ -1,19 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
 import LeftToolbar from "./toolbar/LeftToolbar.jsx";
-import {useCanvasStore} from "../../store/index.js";
+import {useCanvasStore, useProjectsStore} from "../../store/index.js";
 import RightToolbar from "./toolbar/RightToolbar.jsx";
+import {useParams} from "react-router-dom";
 
 const CanvasWrapper = () => {
     const canvasRef = useRef(null);
     const { canvas, setCanvas, color, brushSize, brushType,
-        isDrawingMode, selectedLayerId, layers, addObjectToLayer, addToUndoStack, undo, redo } = useCanvasStore();
-
-
-    //get project id from url
-    //get project from store
-    //give wdth and hght to canvas
-
+        isDrawingMode, selectedLayerId, layers, addObjectToLayer, addToUndoStack, undo, redo, resetCanvasState } = useCanvasStore();
+    const { id } = useParams();
+    const { getProjectById } = useProjectsStore();
+    const project = getProjectById(parseInt(id, 10));
 
     useEffect(() => {
         const initCanvas = new fabric.Canvas(canvasRef.current, {
@@ -24,6 +22,7 @@ const CanvasWrapper = () => {
 
         return () => {
             initCanvas.dispose();
+            resetCanvasState();
         };
     }, []);
 
@@ -142,7 +141,7 @@ const CanvasWrapper = () => {
         <div className="flex">
             <LeftToolbar clearCanvas={clearCanvas} onImageUpload={handleImageUpload} undo={undo} redo={redo} onExport={handleExport} />
             <div className="flex-grow flex justify-center items-center">
-                <canvas ref={canvasRef} width={800} height={600} style={{ border: '1px solid #000' }} />
+                <canvas ref={canvasRef} width={project.width} height={project.height} style={{ border: '1px solid #000' }} />
             </div>
             <RightToolbar/>
         </div>

@@ -11,6 +11,18 @@ const useCanvasStore = create((set) => ({
     undoStack: [],
     redoStack: [],
 
+    resetCanvasState: () => set({
+        canvas: null,
+        isDrawingMode: true,
+        color: '#130c0c',
+        brushType: 'PencilBrush',
+        brushSize: 5,
+        layers: [],
+        selectedLayerId: null,
+        undoStack: [],
+        redoStack: [],
+    }),
+
     setColor: (newColor) => set({ color: newColor }),
     setIsDrawingMode: (newIsDrawingMode) => set({ isDrawingMode: newIsDrawingMode }),
     setBrushSize: (newThickness) => set({ brushSize: newThickness }),

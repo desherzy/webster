@@ -20,7 +20,12 @@ const useProjectsStore = create((set) => ({
         } catch (error) {
             console.error('Error creating project:', error);
         }
-    }
+    },
+
+    getProjectById: (id) => {
+        const project = useProjectsStore.getState().projects.find((proj) => proj.id === id);
+        return project;
+    },
 
 }));
 
