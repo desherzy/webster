@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { IconButton } from '@mui/material';
+import ImageIcon from '@mui/icons-material/Image';
 
 const ImageUploader = ({ onImageUpload }) => {
     const handleImageUpload = (event) => {
@@ -24,9 +25,9 @@ const ImageUploader = ({ onImageUpload }) => {
                 onChange={handleImageUpload}
             />
             <label htmlFor="image-upload">
-                <Button variant="contained" component="span">
-                    Upload Image
-                </Button>
+                <IconButton color="primary" component="span">
+                    <ImageIcon sx={{ color: 'white', fontSize: 40 }} />
+                </IconButton>
             </label>
         </div>
     );

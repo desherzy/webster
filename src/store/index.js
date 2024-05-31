@@ -1,3 +1,5 @@
- import useCanvasStore from "./canvas.js";
+import useCanvasStore from "./canvas.js";
+import useAuthStore from "./auth.js";
+import useProjectsStore from "./projects.js";
 
-export { useCanvasStore };
+export { useCanvasStore, useAuthStore, useProjectsStore };

@@ -1,5 +1,5 @@
 import React from 'react';
-import CanvasWrapper from "./workspace/CanvasWrapper.jsx";
+import CanvasWrapper from "./CanvasWrapper.jsx";
 
 const Workspace = () => {
     return (

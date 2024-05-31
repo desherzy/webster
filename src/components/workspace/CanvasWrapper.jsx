@@ -9,6 +9,12 @@ const CanvasWrapper = () => {
     const { canvas, setCanvas, color, brushSize, brushType,
         isDrawingMode, selectedLayerId, layers, addObjectToLayer, addToUndoStack, undo, redo } = useCanvasStore();
 
+
+    //get project id from url
+    //get project from store
+    //give wdth and hght to canvas
+
+
     useEffect(() => {
         const initCanvas = new fabric.Canvas(canvasRef.current, {
             isDrawingMode: false,
