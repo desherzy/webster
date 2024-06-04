@@ -59,9 +59,9 @@ class ProjectController {
         try {
             const id = req.params.id;
             const userId = req.user.id;
-            const { content } = req.body;
+            const { contentJson } = req.body;
 
-            await projectService.saveProject(id, userId, content);
+            await projectService.saveProject(id, userId, contentJson);
 
             res.status(200).json({ message: 'Project is successfully saved' });
         } catch(e) {
