@@ -59,7 +59,7 @@ function Settings() {
     return (
         <Grid container justifyContent="center" alignItems="center" className="mt-5 text-white p-4">
             <Grid item xs={11} md={6} lg={4}>
-                <Box className="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <Box className=" p-6 rounded-xl shadow-lg" sx={{backgroundColor: "#1e1e1e"}}>
                     <Grid container direction="column" alignItems="center" spacing={2}>
                         <Grid item>
                             <div

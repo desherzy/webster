@@ -1,20 +1,18 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
-    Box, Button,
+    Box,
+    Button,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
+    SpeedDial,
     SpeedDialAction,
     SpeedDialIcon,
-    TextField
-} from "@mui/material";
-import SpeedDial from '@mui/material/SpeedDial';
-import SaveIcon from '@mui/icons-material/Create';
-import ShareIcon from '@mui/icons-material/Share';
-import {useProjectsStore} from "../store/index.js";
-
-
+    TextField,
+} from '@mui/material';
+import { useProjectsStore } from '../store/index.js';
+import {Create, CreateNewFolderOutlined, Edit} from "@mui/icons-material";
 
 const BasicSpeedDial = () => {
     const [open, setOpen] = useState(false);
@@ -38,17 +36,49 @@ const BasicSpeedDial = () => {
 
     return (
         <>
-            <Box sx={{ marginTop: '70vh', transform: 'translateZ(0px)', flexGrow: 1 }}>
+            <Box
+                sx={{
+                    position: 'fixed',
+                    bottom: 20,
+                    right: 16,
+                    zIndex: 100,
+                }}
+            >
                 <SpeedDial
                     ariaLabel="SpeedDial basic example"
-                    sx={{ position: 'absolute', bottom: 16, right: 16 }}
+                    sx={{
+                        backgroundColor: '#242424',
+                        color: 'white',
+                        '& .MuiSpeedDialAction-fab': {
+                            backgroundColor: '#1e1e1e',
+                            color: 'white',
+                        },
+                    }}
                     icon={<SpeedDialIcon />}
                 >
-                    <SpeedDialAction icon={<SaveIcon />} tooltipTitle="Create" onClick={handleClickOpen} />
-                    <SpeedDialAction icon={<ShareIcon />} tooltipTitle="Copy" />
+                    <SpeedDialAction
+                        icon={<CreateNewFolderOutlined />}
+                        tooltipTitle="Create"
+                        onClick={handleClickOpen}
+                        sx={{
+                            '& .MuiSpeedDialAction-fab': {
+                                backgroundColor: '#1976d2',
+                                color: 'white',
+                            },
+                        }}
+                    />
                 </SpeedDial>
             </Box>
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                sx={{
+                    '& .MuiDialog-paper': {
+                        backgroundColor: '#1e1e1e',
+                        color: 'white',
+                    },
+                }}
+            >
                 <DialogTitle>Create Project</DialogTitle>
                 <DialogContent>
                     <TextField
@@ -59,6 +89,16 @@ const BasicSpeedDial = () => {
                         fullWidth
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        InputLabelProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
+                        InputProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
                     />
                     <TextField
                         margin="dense"
@@ -67,6 +107,16 @@ const BasicSpeedDial = () => {
                         fullWidth
                         value={height}
                         onChange={(e) => setHeight(e.target.value)}
+                        InputLabelProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
+                        InputProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
                     />
                     <TextField
                         margin="dense"
@@ -75,6 +125,16 @@ const BasicSpeedDial = () => {
                         fullWidth
                         value={width}
                         onChange={(e) => setWidth(e.target.value)}
+                        InputLabelProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
+                        InputProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
                     />
                 </DialogContent>
                 <DialogActions>

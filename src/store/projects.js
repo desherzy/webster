@@ -30,6 +30,31 @@ const useProjectsStore = create((set) => ({
         }
     },
 
+    deleteProject: async (id) => {
+        try {
+            await $api.delete(`/projects/${id}`);
+            set((state) => ({
+                projects: state.projects.filter(project => project.id !== parseInt(id))
+            }));
+        } catch (error) {
+            console.error('Error saving project:', error);
+        }
+    },
+
+    updateProjectName: async (newName, id) => {
+        try {
+            await $api.patch(`/projects/${id}`, { newName });
+            set((state) => ({
+                projects: state.projects.map(project =>
+                    project.id === id ? { ...project, name: newName } : project
+                )
+            }));
+        } catch (error) {
+            console.error('Error saving project:', error);
+        }
+    },
+
+
     getProjectById: (id) => {
         const project = useProjectsStore.getState().projects.find((proj) => proj.id === id);
         return project;

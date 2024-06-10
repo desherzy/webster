@@ -5,8 +5,8 @@ import BasicSpeedDial from "./BasicSpeedDial.jsx";
 const ProjectsPage = () => {
     return (
         <div>
-            <ProjectsList/>
-            <BasicSpeedDial/>
+            <ProjectsList />
+            <BasicSpeedDial />
         </div>
     );
 };
