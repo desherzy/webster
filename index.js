@@ -25,9 +25,10 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 app.use(fileUpload());
 app.use(express.json());
+app.use('/usersAvatars', express.static(path.join(__dirname, 'usersAvatars')))
 app.use(cors(corsOptions));
 app.use('/api/auth', authRouter);
-app.use('/api/user', userRouter);
+app.use('/api/users', userRouter);
 app.use('/api/projects', projectRouter);
 
 app.listen(process.env.PORT, () => {

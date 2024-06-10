@@ -1,6 +1,5 @@
 const ApiError = require('../exceptions/apiError');
 const Canvas = require('../models/Canvas');
-const CanvasDto = require('../dtos/CanvasDto');
 
 class ProjectService {
     async getUserProjects(userId) {
@@ -20,38 +19,23 @@ class ProjectService {
     }
 
     async deleteProject(id, userId) {
-        try {
-            const project = await Canvas.findOne({where: {id: id}});
-            if (!project) {
-                throw ApiError.badRequest('Project exists');
-            }
-
-            if (isUserAuthor(id, userId)) {
-                await Canvas.destroy({where: {id: id}});
-                console.log('Project[' + id + '] deleted');
-            } else {
-                throw ApiError.forbidden('Access denied');
-            }
-        } catch (error) {
-            console.error('Error deliting project:', error);
-            throw error;
+        const project = await Canvas.findOne({where: {id: id}});
+        if (!project) {
+            throw ApiError.badRequest('Project exists');
         }
+        await Canvas.destroy({where: {id: id}});
     }
 
     async renameProject(id, newName) {
-        try {
-            const project = await Canvas.findOne({where: {id: id}});
-            if (!project) {
-                throw ApiError.badRequest('Project not found');
-            }
+        const project = await Canvas.findOne({where: {id: id}});
+        if (!project) {
+            throw ApiError.badRequest('Project not found');
+        }
 
-            if (newName) {
-                project.name = newName;
-                await project.save();
-                return project;
-            }
-        } catch (error) {
-            throw error;
+        if (newName) {
+            project.name = newName;
+            await project.save();
+            return project;
         }
     }
 
@@ -74,16 +58,8 @@ class ProjectService {
     }
 
     async isUserAuthor(projectId, userId) {
-        try {
-            const project = await Canvas.findAll({where: {id: projectId}});
-            if (project.owner_id = userId) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch {error} {
-            throw error;
-        }
+            const project = await Canvas.findOne({where: {id: projectId}});
+            return project.owner_id === userId;
     }
 }
 

@@ -19,9 +19,7 @@ class UserController {
             const userId = req.user.id;
             const updatedFields = req.body;
 
-            if (!userId || !updatedFields) {
-                throw ApiError.badRequest('Invalid update data');
-            }
+
             const updatedUser = await userService.updateUser(userId, updatedFields);
             res.json(updatedUser);
         } catch(e) {
