@@ -3,9 +3,17 @@ import {Box, Typography, Select, MenuItem, IconButton, Chip} from '@mui/material
 import BrushIcon from '@mui/icons-material/Brush';
 import SelectAllIcon from '@mui/icons-material/SelectAll';
 import {useCanvasStore} from "../../../store/index.js";
+import EraserIcon from '@mui/icons-material/AutoFixOff';
 
 const BrushSelect = () => {
-    const { setIsDrawingMode, setBrushType } = useCanvasStore();
+    const { setIsDrawingMode, setBrushType, setColor } = useCanvasStore();
+
+    const activateEraser = () => {
+        setIsDrawingMode(true);
+        setColor('white');
+    };
+
+
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" mb={2} color="white">
@@ -28,6 +36,9 @@ const BrushSelect = () => {
                 </IconButton>
                 <IconButton onClick={() => setIsDrawingMode(false)}>
                     <SelectAllIcon sx={{ color: 'white' }} />
+                </IconButton>
+                <IconButton onClick={activateEraser}>
+                    <EraserIcon sx={{ color: 'white' }} />
                 </IconButton>
             </Box>
         </Box>

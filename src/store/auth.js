@@ -99,14 +99,14 @@ const useAuthStore = create(devtools((set) => ({
 
     updateUser: async (updated) => {
         try {
-            const response = await $api.patch('/users/update', { login: updated });
+            const response = await $api.patch('/users/update', updated );
 
-            const { login } = response.data;
+            const { username } = response.data;
             set((state) => ({
                 ...state,
                 user: {
                     ...state.user,
-                    login: login,
+                    username: username,
                 },
             }));
 
@@ -115,23 +115,7 @@ const useAuthStore = create(devtools((set) => ({
         }
     },
 
-    toogleNotifications: async (newValue) => {
-        try {
-            const response = await $api.post('/users/notification', { notifications: newValue });
 
-            const { notifications } = response.data;
-            set((state) => ({
-                ...state,
-                user: {
-                    ...state.user,
-                    notifications: notifications,
-                },
-            }));
-
-        } catch (error) {
-            console.error('Error uploading avatar:', error);
-        }
-    },
 })));
 
 

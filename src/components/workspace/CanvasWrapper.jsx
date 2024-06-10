@@ -20,12 +20,15 @@ const CanvasWrapper = () => {
         initCanvas.setBackgroundColor('white', initCanvas.renderAll.bind(initCanvas));
         setCanvas(initCanvas);
 
+        if (project && project.content) {
+            initCanvas.loadFromJSON(project.content, initCanvas.renderAll.bind(initCanvas));
+        }
+
         return () => {
             initCanvas.dispose();
             resetCanvasState();
         };
     }, []);
-
 
     useEffect(() => {
         if (canvas) {

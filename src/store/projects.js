@@ -22,6 +22,14 @@ const useProjectsStore = create((set) => ({
         }
     },
 
+    saveProject: async (contentJson, id) => {
+        try {
+            await $api.post(`/projects/save/${id}`, { contentJson });
+        } catch (error) {
+            console.error('Error saving project:', error);
+        }
+    },
+
     getProjectById: (id) => {
         const project = useProjectsStore.getState().projects.find((proj) => proj.id === id);
         return project;

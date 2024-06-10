@@ -78,7 +78,7 @@ const Header = () => {
     );
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{ backgroundColor: '#092640' }}>
             <Toolbar>
                 <IconButton
                     onClick={toggleDrawer}
@@ -90,11 +90,11 @@ const Header = () => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Drawing App
+                <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                    Webster
                 </Typography>
                 {isAuthenticated ? (
-                    <IconButton color="inherit" onClick={() => navigate('/profile')}>
+                    <IconButton color="inherit" onClick={() => navigate('/settings')}>
                         <Avatar src={user?.profileImage || '/defaultUserImage.png'} />
                     </IconButton>
                 ) : (
