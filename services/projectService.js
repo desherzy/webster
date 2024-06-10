@@ -21,7 +21,7 @@ class ProjectService {
 
     async deleteProject(id, userId) {
         try {
-            const project = await Canvas.findAll({where: {id: id}});
+            const project = await Canvas.findOne({where: {id: id}});
             if (!project) {
                 throw ApiError.badRequest('Project exists');
             }
@@ -48,8 +48,7 @@ class ProjectService {
             if (newName) {
                 project.name = newName;
                 await project.save();
-                const CanvasDto = new CanvasDto(project);
-                return CanvasDto;
+                return project;
             }
         } catch (error) {
             throw error;
@@ -58,7 +57,7 @@ class ProjectService {
 
     async saveProject(projectId, userId, content) {
         try {
-            const project = await Canvas.findAll({where: {id: projectId, owner_id: userId}});
+            const project = await Canvas.findOne({where: {id: projectId, owner_id: userId}});
             if (!project) {
                 throw ApiError.badRequest('Project not found');
             }
@@ -66,8 +65,7 @@ class ProjectService {
             if (content) {
                 project.content = content;
                 await project.save();
-                const CanvasDto = new CanvasDto(project);
-                return CanvasDto;
+                return project;
             }
         } catch (error) {
             console.error('Error saving project', error);
