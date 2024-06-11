@@ -1,16 +1,26 @@
 import React from 'react';
-import {Box, Typography, Select, MenuItem, IconButton, Chip} from '@mui/material';
+import {Box, Typography, Select, MenuItem, IconButton, Chip, Tooltip} from '@mui/material';
 import BrushIcon from '@mui/icons-material/Brush';
 import SelectAllIcon from '@mui/icons-material/SelectAll';
-import {useCanvasStore} from "../../../store/index.js";
+import {useCanvasStore, useProjectsStore} from "../../../store/index.js";
 import EraserIcon from '@mui/icons-material/AutoFixOff';
+import SaveIcon from "@mui/icons-material/Save.js";
+import {useParams} from "react-router-dom";
 
 const BrushSelect = () => {
-    const { setIsDrawingMode, setBrushType, setColor } = useCanvasStore();
-
+    const { setIsDrawingMode, setBrushType, setColor, canvas } = useCanvasStore();
+    const { saveProject } = useProjectsStore();
     const activateEraser = () => {
         setIsDrawingMode(true);
         setColor('white');
+    };
+    const { id } = useParams();
+
+    const handleSave = async () => {
+        if (canvas) {
+            const contentJson = JSON.stringify(canvas.toJSON());
+            await saveProject(contentJson, id);
+        }
     };
 
 
@@ -31,15 +41,26 @@ const BrushSelect = () => {
                 </Select>
             </Box>
             <Box display="flex" justifyContent="space-between" width="100%">
-                <IconButton onClick={() => setIsDrawingMode(true)}>
-                    <BrushIcon sx={{ color: 'white' }} />
-                </IconButton>
-                <IconButton onClick={() => setIsDrawingMode(false)}>
-                    <SelectAllIcon sx={{ color: 'white' }} />
-                </IconButton>
-                <IconButton onClick={activateEraser}>
-                    <EraserIcon sx={{ color: 'white' }} />
-                </IconButton>
+                <Tooltip title="Draw">
+                    <IconButton onClick={() => setIsDrawingMode(true)}>
+                        <BrushIcon sx={{ color: 'white' }} />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Select mode">
+                    <IconButton onClick={() => setIsDrawingMode(false)}>
+                        <SelectAllIcon sx={{ color: 'white' }} />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Eraser">
+                    <IconButton onClick={activateEraser}>
+                        <EraserIcon sx={{ color: 'white' }} />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Save">
+                    <IconButton onClick={handleSave}>
+                        <SaveIcon sx={{color: 'white'}}/>
+                    </IconButton>
+                </Tooltip>
             </Box>
         </Box>
     );

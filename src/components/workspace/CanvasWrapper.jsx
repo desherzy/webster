@@ -141,10 +141,12 @@ const CanvasWrapper = () => {
 
 
     return (
-        <div className="flex">
-            <LeftToolbar clearCanvas={clearCanvas} onImageUpload={handleImageUpload} undo={undo} redo={redo} onExport={handleExport} />
-            <div className="flex-grow flex justify-center items-center">
-                <canvas ref={canvasRef} width={project.width} height={project.height} style={{ border: '1px solid #000' }} />
+        <div className="flex h-screen">
+            <LeftToolbar clearCanvas={clearCanvas} onImageUpload={handleImageUpload} undo={undo} redo={redo}
+                         onExport={handleExport}/>
+            <div className="flex-grow flex justify-center items-center overflow-auto">
+                <canvas ref={canvasRef} width={project.width} height={project.height}
+                        style={{border: '1px solid #000'}}/>
             </div>
             <RightToolbar/>
         </div>

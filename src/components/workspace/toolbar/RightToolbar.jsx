@@ -6,9 +6,8 @@ import ImageFilters from "../image/ImageFilters.jsx";
 const RightToolbar = () => {
 
     return (
-        <div className="w-64 bg-gray-800 p-2 h-screen">
+        <div className="w-60 bg-gray-800 p-2 h-screen flex flex-col ml-5">
             <ImageFilters/>
-
             <Layers/>
         </div>
     );

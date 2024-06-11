@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import BrushOptions from '../drawing/BrushOptions.jsx';
 import BrushSelect from '../drawing/BrushSelect.jsx';
-import { IconButton } from '@mui/material';
+import {IconButton, Tooltip} from '@mui/material';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
@@ -20,7 +20,7 @@ import {useParams} from "react-router-dom";
 const LeftToolbar = ({ clearCanvas, onImageUpload, undo, redo, onExport }) => {
     const [isExportModalOpen, setExportModalOpen] = useState(false);
     const { canvas, color} = useCanvasStore();
-    const { saveProject } = useProjectsStore();
+
     const [isPanning, setIsPanning] = useState(false);
     const [zoomFactor, setZoomFactor] = useState(1);
     const [zoomMode, setZoomMode] = useState(false);
@@ -34,12 +34,7 @@ const LeftToolbar = ({ clearCanvas, onImageUpload, undo, redo, onExport }) => {
         }
     };
 
-    const handleSave = async () => {
-        if (canvas) {
-            const contentJson = JSON.stringify(canvas.toJSON());
-            await saveProject(contentJson, id);
-        }
-    };
+
 
     useEffect(() => {
         if (!canvas) return;
@@ -156,50 +151,70 @@ const LeftToolbar = ({ clearCanvas, onImageUpload, undo, redo, onExport }) => {
     };
 
     return (
-        <div className="flex flex-col justify-between h-screen bg-gray-800 p-1">
+        <div className="w-52 bg-gray-800 p-2 flex flex-col justify-between h-screen mr-5">
             <div>
-                <div className="flex items-center justify-between bg-gray-600 rounded-3xl mt-2 mb-2">
-                    <IconButton onClick={clearCanvas} color="secondary">
-                        <DeleteForeverIcon sx={{ color: 'white', fontSize: 30 }} />
-                    </IconButton>
-                    <IconButton onClick={undo} color="primary" >
-                        <UndoIcon sx={{ color: 'white', fontSize: 30 }} />
-                    </IconButton>
-                    <IconButton onClick={redo} color="primary" >
-                        <RedoIcon sx={{ color: 'white', fontSize: 30 }} />
-                    </IconButton>
-                    <IconButton onClick={openExportModal} color="primary">
-                        <SaveAltIcon sx={{ color: 'white', fontSize: 30 }} />
-                    </IconButton>
+                <div className="flex items-center justify-between bg-gray-600 rounded-3xl mt-2 mb-7 p-1">
+                    <Tooltip title="Clear Canvas">
+                        <IconButton onClick={clearCanvas}>
+                            <DeleteForeverIcon sx={{color: 'white', fontSize: 30}}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Undo">
+                        <IconButton onClick={undo}>
+                            <UndoIcon sx={{color: 'white', fontSize: 30}}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Redo">
+                        <IconButton onClick={redo}>
+                            <RedoIcon sx={{color: 'white', fontSize: 30}}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Export">
+                        <IconButton onClick={openExportModal}>
+                            <SaveAltIcon sx={{color: 'white', fontSize: 30}}/>
+                        </IconButton>
+                    </Tooltip>
                 </div>
 
-                <ExportModal
-                    open={isExportModalOpen}
-                    onClose={closeExportModal}
-                    onExport={onExport}
-                />
-                <BrushOptions/>
+                <ExportModal open={isExportModalOpen} onClose={closeExportModal} onExport={onExport}/>
+
+                <div className="flex flex-col space-y-2">
+                    <BrushOptions/>
+                    <ShapesSelect/>
+                </div>
+
+                <div className="mt-4 flex flex-col space-y-2">
+                    <Tooltip title="Fill Canvas Background">
+                        <IconButton onClick={fillCanvasBackground}>
+                            <FormatColorFillIcon sx={{color: 'white'}}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Add Text">
+                        <IconButton onClick={addText}>
+                            <TextFieldsIcon sx={{color: 'white'}}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Pan Tool">
+                        <IconButton onClick={togglePanning}>
+                            <PanToolIcon sx={{color: 'white'}}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Zoom Mode">
+                        <IconButton onClick={toggleZoomMode}>
+                            <ZoomInIcon sx={{color: zoomMode ? 'yellow' : 'white'}}/>
+                        </IconButton>
+                    </Tooltip>
+
+
+                </div>
                 <BrushSelect/>
-                <ShapesSelect/>
-                <ImageUploader onImageUpload={onImageUpload}/>
-                <IconButton onClick={fillCanvasBackground} color="primary" sx={{ mt: 2 }}>
-                    <FormatColorFillIcon sx={{ color: 'white' }} />
-                </IconButton>
-                <IconButton onClick={addText} sx={{ color: 'white' }}>
-                    <TextFieldsIcon />
-                </IconButton>
-                <IconButton onClick={togglePanning} sx={{ color: 'white' }}>
-                    <PanToolIcon />
-                </IconButton>
-                <IconButton onClick={toggleZoomMode} sx={{ color: zoomMode ? 'yellow' : 'white' }}>
-                    <ZoomInIcon />
-                </IconButton>
-                <IconButton onClick={handleSave} sx={{ color: 'white' }}>
-                    <SaveIcon />
-                </IconButton>
+                <br></br>
+                <Tooltip title="Upload image">
+                    <ImageUploader onImageUpload={onImageUpload}/>
+                </Tooltip>
             </div>
-            <div className="flex-grow"/>
         </div>
+
     );
 };
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import {useCanvasStore} from "../../../store/index.js";
-import {Box, Chip, Slider, Typography} from "@mui/material";
+import {Box, Chip, Slider, Tooltip, Typography} from "@mui/material";
 import ColorLensIcon from '@mui/icons-material/ColorLens';
+import {CalendarTodayOutlined} from "@mui/icons-material";
 
 const BrushOptions = () => {
     const { color, setColor, brushSize, setBrushSize } = useCanvasStore();
@@ -9,7 +10,10 @@ const BrushOptions = () => {
     return (
         <Box display="flex" flexDirection="column" alignItems="center" mb={2} color="white">
             <Box display="flex" alignItems="center" mb={2}>
-                <ColorLensIcon sx={{ mr: 1, color: 'white' }} />
+                <Tooltip title="Brush Color" >
+                    <ColorLensIcon sx={{ mr: 1, color: 'white' }} />
+                </Tooltip>
+
                 <input
                     type="color"
                     value={color}

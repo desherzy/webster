@@ -77,16 +77,16 @@ const ShapesSelect = () => {
             />
             <Box display="flex" justifyContent="space-around">
                 <IconButton onClick={() => addShape('Circle')} sx={{ color: 'white', fontSize: 40 }}>
-                    <CircleIcon sx={{ fontSize: 40 }} />
+                    <CircleIcon sx={{ fontSize: 30 }} />
                 </IconButton>
                 <IconButton onClick={() => addShape('Square')} sx={{ color: 'white', fontSize: 40 }}>
-                    <SquareIcon sx={{ fontSize: 40 }} />
+                    <SquareIcon sx={{ fontSize: 30 }} />
                 </IconButton>
                 <IconButton onClick={() => addShape('Triangle')} sx={{ color: 'white', fontSize: 40 }}>
-                    <ChangeHistoryIcon sx={{ fontSize: 40 }} />
+                    <ChangeHistoryIcon sx={{ fontSize: 30 }} />
                 </IconButton>
                 <IconButton onClick={() => addShape('Line')} sx={{ color: 'white', fontSize: 40 }}>
-                    <HorizontalRuleIcon sx={{ fontSize: 40 }} />
+                    <HorizontalRuleIcon sx={{ fontSize: 30 }} />
                 </IconButton>
             </Box>
         </Box>
