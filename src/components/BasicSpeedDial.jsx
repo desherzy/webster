@@ -34,6 +34,20 @@ const BasicSpeedDial = () => {
         setOpen(false);
     };
 
+    const handleHeightChange = (e) => {
+        let value = e.target.value;
+        if (value < 1) value = 1;
+        if (value > 2600) value = 2600;
+        setHeight(value);
+    };
+
+    const handleWidthChange = (e) => {
+        let value = e.target.value;
+        if (value < 1) value = 1;
+        if (value > 2600) value = 2600;
+        setWidth(value);
+    };
+
     return (
         <>
             <Box
@@ -106,7 +120,7 @@ const BasicSpeedDial = () => {
                         type="number"
                         fullWidth
                         value={height}
-                        onChange={(e) => setHeight(e.target.value)}
+                        onChange={handleHeightChange}
                         InputLabelProps={{
                             style: {
                                 color: 'white',
@@ -115,6 +129,10 @@ const BasicSpeedDial = () => {
                         InputProps={{
                             style: {
                                 color: 'white',
+                            },
+                            inputProps: {
+                                min: 1,
+                                max: 2600,
                             },
                         }}
                     />
@@ -124,7 +142,7 @@ const BasicSpeedDial = () => {
                         type="number"
                         fullWidth
                         value={width}
-                        onChange={(e) => setWidth(e.target.value)}
+                        onChange={handleWidthChange}
                         InputLabelProps={{
                             style: {
                                 color: 'white',
@@ -133,6 +151,10 @@ const BasicSpeedDial = () => {
                         InputProps={{
                             style: {
                                 color: 'white',
+                            },
+                            inputProps: {
+                                min: 1,
+                                max: 2600,
                             },
                         }}
                     />

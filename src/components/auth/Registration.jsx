@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useAuthStore } from '../../store/index.js';
 import {
     Alert,
@@ -147,6 +147,22 @@ const Registration = () => {
                         >
                             Register
                         </Button>
+                    </Box>
+                    <Box sx={{ textAlign: 'center', mt: 2 }}>
+                        <Typography variant="body2" sx={{ color: 'grey' }}>
+                            Already have an account?{' '}
+                            <Link
+                                to="/login"
+                                sx={{
+                                    color: 'navy',
+                                    '&:hover': {
+                                        textDecoration: 'underline',
+                                    },
+                                }}
+                            >
+                                Login
+                            </Link>
+                        </Typography>
                     </Box>
                 </Box>
             </Paper>

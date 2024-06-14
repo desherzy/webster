@@ -12,7 +12,7 @@ const ExportModal = ({ open, onClose, onExport }) => {
     };
 
     return (
-        <Modal open={open} onClose={onClose}>
+        <Modal sx={{width: "40vw", margin: "auto"}} open={open} onClose={onClose}>
             <Box
                 display="flex"
                 flexDirection="column"
@@ -23,6 +23,9 @@ const ExportModal = ({ open, onClose, onExport }) => {
                 borderRadius={2}
                 boxShadow={24}
             >
+                <Box>
+                    <h1 className="text-black">Export settings</h1>
+                </Box>
                 <Typography variant="h6" mb={2}>Export Canvas</Typography>
                 <TextField
                     label="File Name"
@@ -40,6 +43,7 @@ const ExportModal = ({ open, onClose, onExport }) => {
                     <MenuItem value="png">PNG</MenuItem>
                     <MenuItem value="jpeg">JPEG</MenuItem>
                     <MenuItem value="json">JSON</MenuItem>
+                    <MenuItem value="json">PDF</MenuItem>
                     <MenuItem value="svg">SVG</MenuItem>
                 </Select>
                 {format === 'jpeg' && (

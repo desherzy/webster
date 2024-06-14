@@ -1,33 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from 'react-material-ui-carousel';
-import {
-    Box,
-    Typography,
-    Button
-} from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 
 const photos = [
-    { url: 'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?q=80&w=600' },
-    { url: 'https://images.unsplash.com/photo-1521747116042-5a810fda9664?q=80&w=600' },
-    { url: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?q=80&w=600' },
+    { url: '/workspace1.png' },
+    { url: '/workspace2.png' },
+    { url: '/workspace3.png' },
 ];
 
 const MainPage = () => {
     return (
         <Box
             sx={{
-                backgroundImage: 'url(https://images.unsplash.com/photo-1497864149936-d3163f0c0f4b?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
+                position: 'relative',
                 height: '100vh',
-                width: '100vw',
+
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'row', // Changed to row to position boxes side by side
-                gap: 7, // Reduced gap between boxes
-                padding: 5, // Padding to give some space from the edges
+                flexDirection: 'row',
+                gap: 7,
+                padding: 5,
+                overflow: 'hidden',
+                '::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundImage: 'url(https://images.unsplash.com/photo-1497864149936-d3163f0c0f4b?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    filter: 'brightness(0.5) blur(7px)',
+                    zIndex: -1,
+                },
             }}
         >
             <Box
@@ -72,7 +80,7 @@ const MainPage = () => {
                             color: '#fff',
                             padding: '10px 20px',
                             borderRadius: 5,
-                            marginBottom: 20, // Add margin-bottom for spacing after the button
+                            marginBottom: 20,
                         }}
                     >
                         Get started
@@ -80,7 +88,7 @@ const MainPage = () => {
                 </Link>
             </Box>
 
-            <Box sx={{ width: '40%' }}> {/* Width for the carousel box */}
+            <Box sx={{ width: '45%' }}>
                 <Carousel>
                     {photos.map((photo, index) => (
                         <Box
@@ -89,8 +97,10 @@ const MainPage = () => {
                             src={photo.url}
                             sx={{
                                 width: '100%',
+                                maxHeight: '900px',
                                 borderRadius: 5,
                                 boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                                objectFit: 'contain',
                             }}
                         />
                     ))}
